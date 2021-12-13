@@ -32,7 +32,34 @@ totalcells = prod(dim(df))
 
 # calculating the number of cells with na
 missingcells = sum(is.na(df))
+########DATA MANIPULATION ############
 
+#transforming 'Release' and DVD values into date:
+
+df$Released <- dmy(df$Released)
+NotR <- sum(is.na(df$Released))
+length(df$Released)
+1875/4890*100 #checking for percentage of missing values
+
+
+df$DVD <- dmy(df$DVD)
+notdvd <- sum(is.na(df$DVD))
+length(df$DVD)
+4061/4890 * 100 #83% of missing value, we might consider of removing this variable
+
+
+#removing DVD variable:
+df <- df %>%
+  select(-DVD)
+
+
+#Transforming Runtime into integer:
+
+name <- df$Runtime
+df$Runtime <- as.integer(str_sub(name,1,nchar(name)-4))
+length(df$Runtime)
+narun <- sum(is.na(df$Runtime))
+1468/4890*100 #30% of missing values
 # calculating percentage of missing values
 percentage = (missingcells * 100 )/(totalcells)
 print("Percentage of missing values' cells")
