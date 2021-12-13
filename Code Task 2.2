@@ -88,3 +88,33 @@ length(df$Rated)
 df$Rated <- as.factor(df$Rated)
 table(df$Rated)
 df$Rated <- fct_collapse(df$Rated, NotRated = c('Not Rated', 'Unrated'))
+
+#AWARDS in factor:
+length(df$Awards)   
+Awards.final <- na.omit(df$Awards)
+df$Awards <- as.factor((df$Awards))
+length(Awards.final)  
+table(df$Awards)
+df$Awards <- fct_collapse(df$Awards, USA = c('USA', 'United States'))
+
+
+#COUNTRIES in Factor:
+
+df$Country <- as.factor(df$Country)
+table(df$Country)
+df$Country <- fct_collapse(df$Country, USA = c('USA', 'United States'))
+
+#Language in Factor:
+df$Language <- as.factor(df$Language)
+
+
+#LANGUAGE
+length(df$Language)
+is.na(df$Language)
+Language.1 <- subset(df$Language, df$Language != "English")
+Language.2 <- subset(df$Language, df$Language == "English")
+Languages <- c(Language.1, Language.2)
+str(Languages)
+
+# checking cleaned dataframe:
+summary(df)
