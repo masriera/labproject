@@ -127,3 +127,45 @@ barplot(table(Runtime),  # frequency distribution of the variable Runtime
         col= c(4,5),             
         main="Barplot of the Runtime",  
         xlab = "runtime")
+
+#histogram funziona
+Votes <- df$imdbVotes
+str(Votes)
+Votes_f <- as.numeric(Votes)
+str(Votes_f)
+votes <- Votes_f[1:50]
+
+hist(votes,  # put the variable 
+     main="time of release",  
+     xlab= "released",
+     freq = T,   # To have the density on the Y-axis (F stands for FALSE...)
+     col="lightgreen")
+
+#scatterplot
+#relazione tra runtime e imbdRating
+
+
+Rating <- df$imdbRating
+str(Rating)
+Rating10 <- df %>%
+  mutate(Rating = fct_lump(Rating, n = 9)) %>%
+  count(Rating, sort = TRUE) %>%
+  print(n = Inf)
+
+Votes <- df$imdbVotes
+str(Votes)
+
+Votes10 <- df %>%
+  mutate(Votes = fct_lump(Votes, n = 9)) %>%
+  count(Votes, sort = TRUE) %>%
+  print(n = Inf)
+
+
+ggplot(df, aes(x= Votes, y=Rating )) + 
+  geom_point() +
+  labs(x="Runtime", 
+       y="Rating", 
+       title = "Relationship between runtime and ratings") +
+  theme_bw()
+  
+  
