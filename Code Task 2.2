@@ -184,3 +184,22 @@ Language10 %>%
   geom_col()+
   labs(x='',y= 'Relative frequencies',subtitle= 'Relative frequencies of the first 10 Languages', title='First 10 languages')+
   theme_gray() 
+
+#Top 10 Countries barplot:
+
+df$Country <- na_if(df$Country, 'NaN')
+
+Country10 <- df %>%
+  mutate(Country = fct_lump(Country, n = 8)) %>%
+  count(Country, sort = TRUE) 
+
+
+Country10 %>%
+  mutate(n = n/sum(n)) %>%
+  ggplot(aes(x=reorder(Country, -n),
+             y= n,
+             fill= Country)) +
+  geom_col()+
+  labs(x='',y= 'Relative frequencies',subtitle= 'Relative frequencies of the top 10 countries', title='Top 10 countries')+
+  theme_gray()
+  
