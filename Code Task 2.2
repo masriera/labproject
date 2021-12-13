@@ -64,3 +64,25 @@ narun <- sum(is.na(df$Runtime))
 percentage = (missingcells * 100 )/(totalcells)
 print("Percentage of missing values' cells")
 print (percentage)
+
+#boxoffice in numeric
+df$BoxOffice <- as.integer(gsub('[$,]', '', df$BoxOffice))
+nabox <- sum(is.na(df$BoxOffice))
+4492/4890 * 100 #90% of missing value, we might consider removing this variable 
+
+
+#imbdvotes in numeric
+df$imdbVotes <- as.integer(gsub('[,]', '', df$imdbVotes))
+nabox <- sum(is.na(df$imdbVotes))
+
+#transforming selected character variables in factor in order to have a better general understanding of the dataset:
+
+#transforming Genre:
+df$Genre <- as.factor(df$Genre)
+
+
+#Transforming rated in factor: 
+length(df$Rated)
+df$Rated <- as.factor(df$Rated)
+table(df$Rated)
+df$Rated <- fct_collapse(df$Rated, NotRated = c('Not Rated', 'Unrated'))
