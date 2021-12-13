@@ -131,3 +131,95 @@ fig1= plt.figure(1,figsize=(16,9))
 gs1 = gridspec.GridSpec(1, 2)
 ax1 = fig1.add_subplot(gs1[0])
 ax2 = fig1.add_subplot(gs1[1])
+
+#piechart for countries:
+labels = newdic.keys()
+sizes = newdic.values()
+#explodec = (0.05, 0, 0, 0, 0) 
+
+ax1.pie(sizes,labels=labels,rotatelabels= True, autopct='%1.1f%%', startangle=0, shadow=True)
+ax1.axis('equal')
+ax1.legend(loc='upper left')
+
+#piechart for artists:
+
+labels1 = newdic1.keys()
+sizes1 = newdic1.values()
+#explode1 = (0.002, 0, 0, 0, 0, 0) 
+
+
+ax2.pie(sizes1, labels=labels1,rotatelabels= True, autopct='%1.1f%%', radius=0.10, startangle=0)
+ax2.axis('equal')
+
+
+#plotting the final results
+fig1.suptitle('Percentage of artworks\' countries of origin and artists', fontsize=15, fontweight='bold')
+plt.tight_layout()
+plt.savefig('piecharts countries and artists')
+plt.show()
+
+
+
+#%%
+
+#Pie charts medium display and style_title
+
+fig2= plt.figure(1,figsize=(16,9)) 
+gs2 = gridspec.GridSpec(1, 2)
+ax3 = fig2.add_subplot(gs2[0])
+ax4 = fig2.add_subplot(gs2[1])
+
+
+#creating two new dictionaries: 1. newdicstyle
+
+
+labelstyle = df['style_title'].value_counts().keys()
+valuestyle = df['style_title'].value_counts()
+valuestyle_perc = (valuestyle / valuestyle.sum()) * 100
+
+dicsty = dict(zip(labelstyle, valuestyle_perc))
+
+import itertools
+
+newdicstyle={}
+for key, group in itertools.groupby(dicsty, lambda k: 'All the rest' if (dicsty[k] < 1) else k):
+     newdicstyle[key] = sum([dicsty[k] for k in list(group)])   
+
+
+
+#builiding second dictionary for materials: 
+labelmat = df['classification_title'].value_counts().keys()
+valuemat = df['classification_title'].value_counts()
+valuemat_perc = (valuemat / valuemat.sum()) * 100
+
+dicmat = dict(zip(labelmat, valuemat_perc))
+
+
+newdicmat={}
+for key, group in itertools.groupby(dicmat, lambda k: 'All the rest' if (dicmat[k] < 3) else k):
+     newdicmat[key] = sum([dicmat[k] for k in list(group)])   
+
+
+#builing piechart for style
+
+labelstyle2 = newdicstyle.keys()
+sizesstyle = newdicstyle.values()
+#explodestyle = (0.05, 0, 0, 0, 0, 0) 
+
+ax3.pie(sizesstyle, labels=labelstyle2,rotatelabels= True, autopct='%1.1f%%', startangle=0, shadow=True)
+ax3.axis('equal')
+ax3.legend(loc='upper left')
+
+#piechart for medium display
+labelmat2 = newdicmat.keys()
+sizesmat2 = newdicmat.values()
+#explodemat=(0.02, 0.02, 0, 0, 0, 0, 0, 0, 0, 0)
+
+ax4.pie(sizesmat2, labels=labelmat2,rotatelabels= True, autopct='%1.1f%%', radius=0.10, startangle=0, shadow=False)
+ax4.axis('equal')
+ax4.legend(loc='upper right')
+#plotting final results:
+fig2.suptitle('Percentage of artworks\' styles and materials', fontsize=15, fontweight='bold')
+plt.tight_layout()
+plt.savefig('piecharts countries and artists')
+plt.show()
