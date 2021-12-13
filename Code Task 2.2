@@ -32,6 +32,11 @@ totalcells = prod(dim(df))
 
 # calculating the number of cells with na
 missingcells = sum(is.na(df))
+# calculating percentage of missing values
+percentage = (missingcells * 100 )/(totalcells)
+print("Percentage of missing values' cells")
+print (percentage)
+
 ########DATA MANIPULATION ############
 
 #transforming 'Release' and DVD values into date:
@@ -60,10 +65,7 @@ df$Runtime <- as.integer(str_sub(name,1,nchar(name)-4))
 length(df$Runtime)
 narun <- sum(is.na(df$Runtime))
 1468/4890*100 #30% of missing values
-# calculating percentage of missing values
-percentage = (missingcells * 100 )/(totalcells)
-print("Percentage of missing values' cells")
-print (percentage)
+
 
 #boxoffice in numeric
 df$BoxOffice <- as.integer(gsub('[$,]', '', df$BoxOffice))
