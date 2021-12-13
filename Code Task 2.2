@@ -9,3 +9,18 @@ if (any(installed_packages == FALSE)) {
 
 #2. import dataset:
 df <- read.csv('DF_1999movies.csv')
+
+#3.getting a general understanding of the dataset:
+glimpse(df)
+
+head(df)
+
+#4. deselecting variables:
+
+df <- df %>%
+  select(-Response, -Error, -Poster, -Ratings, -imdbID, -Website, -X)
+
+#5. checking for duplicates:
+
+df <- df %>%
+  distinct()
