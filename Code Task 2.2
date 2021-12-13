@@ -168,4 +168,19 @@ ggplot(df, aes(x= Votes, y=Rating )) +
        title = "Relationship between runtime and ratings") +
   theme_bw()
   
-  
+ #barplot language:
+df$Language <- na_if(df$Language, 'NaN')
+Language <- df$Language
+
+Language10 <- df %>%
+  mutate(Language = fct_lump(Language, n = 9)) %>%
+  count(Language, sort = TRUE) 
+
+Language10 %>%
+  mutate(n = n/sum(n)) %>%
+  ggplot(aes(x=reorder(Language, -n),
+             y= n,
+             fill= Language)) +
+  geom_col()+
+  labs(x='',y= 'Relative frequencies',subtitle= 'Relative frequencies of the first 10 Languages', title='First 10 languages')+
+  theme_gray() 
