@@ -1,11 +1,8 @@
-#1. installimng packages required
-install.packages (tidyverse)
-packages = c("tidyverse", "magrittr", 'lubridate')
-
-installed_packages = packages %in% rownames(installed.packages())
-if (any(installed_packages == FALSE)) {
-  install.packages(packages[!installed_packages])
-}
+#1. importing libraries:
+library('stringr')
+library('tidyverse')
+library('magrittr')
+library('forcats')
 
 #2. import dataset:
 df <- read.csv('DF_1999movies.csv')
@@ -40,7 +37,7 @@ print (percentage)
 ########DATA MANIPULATION ############
 
 #transforming 'Release' and DVD values into date:
-
+library('lubridate')
 df$Released <- dmy(df$Released)
 NotR <- sum(is.na(df$Released))
 length(df$Released)
@@ -128,7 +125,7 @@ barplot(table(Runtime),  # frequency distribution of the variable Runtime
         main="Barplot of the Runtime",  
         xlab = "runtime")
 
-#histogram funziona
+#histogram 
 Votes <- df$imdbVotes
 str(Votes)
 Votes_f <- as.numeric(Votes)
