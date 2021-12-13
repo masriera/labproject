@@ -110,7 +110,7 @@ plt.tight_layout(h_pad=2)
 
 plt.show()
 
-plt.style.use("seaborn-pastel")  
+
 
 #Pie chart Countries of origin.
 #1. Countries and artists.
@@ -254,3 +254,68 @@ fontsize = 'large', title_fontsize = "10", loc='upper right')
 plt.show()
 
 plt.savefig('hsn')
+
+#%% 
+#numbers of artwork in the dataframe displayed in Chicago
+
+
+fig4= plt.figure(figsize=(16,9))
+ax6= sns.barplot(x=df.is_on_view.value_counts().index, y=df.is_on_view.value_counts())
+plt.ylabel('Numbers of artworks')
+plt.title('Number of artworks in the dataframe displayed in Chicago', fontsize=10, fontweight='bold')
+plt.tight_layout()
+plt.show()
+plt.savefig('nart', dpi=300)
+
+#%%
+#better visualization:in percentage
+#where are located the arts on display?
+fig6= plt.figure(figsize=(16,9)) 
+explodep=[0.05, 0]
+
+ax7=df['is_on_view'].value_counts().plot(kind='pie', explode= explodep, ylabel='',  autopct='%1.1f%%', shadow=True)
+plt.title('Percentage of artworks on display in Chicago',  fontsize=20, fontweight='bold')
+plt.legend(title='Percentage of artworks displayed', loc='upper right')
+plt.show()
+plt.savefig('artdisp')
+
+#%%
+
+#creating dataframe for artworks on display
+
+artsdisplay = df[df['is_on_view'] == True]
+
+#%%
+
+#location of artworks
+
+fig7 = plt.figure(figsize=(20,10))
+ 
+ax7 = fig7.add_subplot(121)
+ax7.set_title('Percentage of artworks in dataframe on display in chicago')
+explodep=[0.05, 0]
+df['is_on_view'].value_counts().plot(kind='pie', explode= explodep, ylabel='',  autopct='%1.1f%%', shadow=True)
+ax7.legend(loc='lower left')
+
+ax8 = fig7.add_subplot(122)
+artsdisplay['gallery_title'].value_counts().plot(kind='bar')
+plt.suptitle('Artworks on display in Chicago', fontsize=20, fontweight='bold')
+plt.title('In which gallery are the artworks located?')
+plt.savefig("artworks displayed in Chicago.png", dpi=300)
+plt.show()
+
+
+
+#%%
+#artists on display
+fig8= plt.figure(figsize=(16,9))
+
+ax8= sns.countplot(x='artist_title',data= artsdisplay, palette='pastel')
+ax8.set_xticklabels(ax8.get_xticklabels(), rotation=40, ha="right")
+plt.xlabel('')
+plt.ylabel('')
+plt.title('Artists on display in Chicago',fontsize=20, fontweight='bold')
+plt.tight_layout()
+plt.savefig('artists on display in chicago')
+plt.show()
+
