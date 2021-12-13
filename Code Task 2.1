@@ -111,7 +111,7 @@ import itertools
 
 newdic={}
 for key, group in itertools.groupby(dic, lambda k: 'All the rest' if (dic[k] < 2) else k):
-    newdic[key] = sum([dic[k] for k in list(group)])
+newdic[key] = sum([dic[k] for k in list(group)])
 
 
 labels1= df['artist_title'].value_counts().keys()
@@ -122,8 +122,8 @@ dic1 = dict(zip(labels1, values_perc1))
 
 
 newdic1={}
-for key, group in itertools.groupby(dic1, lambda k: 'All the rest' if (dic1[k] < 4) else k):
-    newdic1[key] = sum([dic1[k] for k in list(group)])
+for key, group in itertools.groupby(dic1, lambda k: 'All the rest' if (dic1[k] < 3) else k):
+newdic1[key] = sum([dic1[k] for k in list(group)])
 
 #setting up the plot with Gridspec:
 
@@ -131,12 +131,3 @@ fig1= plt.figure(1,figsize=(16,9))
 gs1 = gridspec.GridSpec(1, 2)
 ax1 = fig1.add_subplot(gs1[0])
 ax2 = fig1.add_subplot(gs1[1])
-
-#piechart for countries:
-labels = newdic.keys()
-sizes = newdic.values()
-explodec = (0.05, 0, 0, 0, 0)
-
-ax1.pie(sizes, explode=explodec, labels=labels,rotatelabels= True, autopct='%1.1f%%', startangle=0, shadow=True)
-ax1.axis('equal')
-ax1.legend(loc='upper left')
