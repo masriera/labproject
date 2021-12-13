@@ -1,3 +1,26 @@
+#we have mported some libraries
+
+import pandas as pd
+import csv
+import matplotlib as mpl
+import matplotlib.pyplot as plt
+from matplotlib import gridspec
+import numpy as np
+import seaborn as sns
+df=pd.read_csv('art1000.csv')
+
+#now we have to clean the dataset
+
+print(df.info())
+
+#dropping columns 
+
+df = df.drop(columns=df.columns[[1,2,5,6,7,12,13,14,15,17,20,21,22,23,24,26,27,29,30,31,35,36,37,38,40,49,50,51,54,58,59,60,79,80,81,82,83,84,85,86,87,88,89,90,91,92]])
+
+print(df.info())
+
+plt.style.use("seaborn-pastel")
+
 #we plotted a scatter plot using the variables technique id and material id.
 
 df.plot(kind='scatter',x='technique_id',y='material_id',color='red', figsize=(20, 10))
@@ -86,14 +109,6 @@ plt.setp(f.axes, yticks=[])
 plt.tight_layout(h_pad=2)
 
 plt.show()
-
-import pandas as pd
-import csv
-import matplotlib as mpl
-import matplotlib.pyplot as plt
-from matplotlib import gridspec
-import numpy as np
-import seaborn as sns
 
 plt.style.use("seaborn-pastel")  
 
@@ -223,3 +238,19 @@ fig2.suptitle('Percentage of artworks\' styles and materials', fontsize=15, font
 plt.tight_layout()
 plt.savefig('piecharts countries and artists')
 plt.show()
+
+#countplot popularity according to place of origin
+
+fig3=plt.figure(figsize=(16,9))
+
+ax5 = sns.countplot(x='place_of_origin',hue='has_not_been_viewed_much', data=df)
+ax5.set_xticklabels(ax5.get_xticklabels(), rotation=50, ha="right")
+plt.xlabel('Countries of origin of the atworks', labelpad=14)
+plt.ylabel('Number of artworks')
+plt.title('Popularity of artworks according to their countries of origin', fontsize=12, fontweight='bold')
+plt.tight_layout()
+plt.legend(labels=["False","True"], title = "Has not been viewed much",
+fontsize = 'large', title_fontsize = "10", loc='upper right')
+plt.show()
+
+plt.savefig('hsn')
