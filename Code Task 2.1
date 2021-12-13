@@ -1,0 +1,55 @@
+#we plotted a scatter plot using the variables technique id and material id.
+
+df.plot(kind='scatter',x='technique_id',y='material_id',color='red', figsize=(20, 10))
+plt.show()
+
+#bar plot with "place_of_origin" and "end_date" variables
+
+place_of_origin = df["place_of_origin"]
+date_end = df["date_end"]
+x = place_of_origin[:10] 
+y = date_end[:10]
+
+x_pos = np.arange(len(x))
+
+plt.bar(x_pos, y, align='center')
+plt.xticks(x_pos, x)
+plt.ylabel('Date')
+plt.xlabel('Places')
+plt.title('Relation between places and date')
+plt.show()
+
+#simple histogram
+
+fig2= plt.figure(1,[16,9])
+date_end.plot(kind='hist', bins=100)
+
+plt.xlabel('End dates of the artworks')
+
+plt.title('Frequency distribution of the artworks according to their end date')
+plt.legend()
+plt.show()
+
+#Another simple histogram
+
+classification_title = df["classification_title"]
+classification_title.value_counts().plot.bar(figsize=(16, 9))
+plt.title('Art techniques')
+
+plt.show()
+
+#Scatterplot using "date_start" and "date_end" variables
+
+date_start = df["date_start"]
+date_end = df["date_end"]
+
+fig4= plt.figure(1,[15,5])
+N = len(date_start)
+area = (10 * np.random.rand(N))**2  # 0 to 15 point radii
+
+plt.scatter(date_start, date_end, s=area, alpha=0.5)
+plt.title("Scatterplot of artworks' date")
+plt.xlabel("Start dates")
+plt.ylabel("End dates")
+plt.show()
+
