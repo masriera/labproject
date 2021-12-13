@@ -118,3 +118,12 @@ str(Languages)
 
 # checking cleaned dataframe:
 summary(df)
+
+################GGPLOT################
+
+#barplot Runtime:
+
+barplot(table(Runtime),  # frequency distribution of the variable Runtime 
+        col= c(4,5),             
+        main="Barplot of the Runtime",  
+        xlab = "runtime")
