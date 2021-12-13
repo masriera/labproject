@@ -1,26 +1,3 @@
-#we have mported some libraries
-
-import pandas as pd
-import matplotlib as mpl
-import matplotlib.pyplot as plt
-import numpy as np
-import seaborn as sns
-df=pd.read_csv('art1000.csv')
-
-#now we have to clean the dataset
-
-print(df.info())
-
-#dropping columns 
-
-df = df.drop(columns=df.columns[[1,2,5,6,7,12,13,14,15,17,20,21,22,23,24,26,27,29,30,31,35,36,37,38,40,49,50,51,54,58,59,60,79,80,81,82,83,84,85,86,87,88,89,90,91,92]])
-
-print(df.info())
-
-plt.style.use("seaborn-pastel")
-
-df['place_of_origin'].value_counts().plot(kind='bar')
-
 #we plotted a scatter plot using the variables technique id and material id.
 
 df.plot(kind='scatter',x='technique_id',y='material_id',color='red', figsize=(20, 10))
@@ -76,49 +53,10 @@ plt.xlabel("Start dates")
 plt.ylabel("End dates")
 plt.show()
 
-import seaborn as sns
-
-f, ax14 = plt.subplots(figsize=(16, 9))
-
-ax14=sns.countplot('has_educational_resources', data=df)
-
-
-plt.xlabel('Do the artworks have educational resources?')
-plt.title('Artworks that have educational resources?')
-plt.show()
-
-#We plot the first 40 inscriptions by transforming the categorical variable into a dummy variable.
-#We do so by using a single bar plot
-
-inscriptions = df["inscriptions"]
-x = inscriptions[:40]
-
-df.assign(dummy = 1).groupby(
-  ['dummy', x]
-).size().to_frame().unstack().plot(kind='bar',stacked=True,legend=False, figsize=(15, 15))
-
-plt.title('Inscriptions')
-
-# other it'll show up as 'dummy' 
-plt.xlabel('inscriptions')
-
-# disable ticks in the x axis
-plt.xticks([])
-
-# fix the legend
-plt.gca().legend(loc='center left', bbox_to_anchor=(1, 0.5))
-
-plt.show()
-
-#We plot the first 40 values of colorfulness in relationship to the first 40 artists. 
- 
-import seaborn as sns
-
-sns.set_theme(style="white", context="talk")
 rs = np.random.RandomState(8)
 
 # Set up the matplotlib figure
-f, (ax1, ax2, ax3) = plt.subplots(3, 1, figsize=(50, 40), sharex=True)
+f, (ax20, ax21, ax22) = plt.subplots(3, 1, figsize=(50, 40), sharex=True)
 
 colorfulness = df["colorfulness"]
 artist = df["artist_id"]
@@ -126,26 +64,79 @@ artist = df["artist_id"]
 x = colorfulness[:40]
 y1 = artist[:40]
 
-sns.barplot(x=x, y=y1, palette="rocket", ax=ax1)
-ax1.axhline(0, color="k", clip_on=False)
-ax1.set_ylabel("Sequential")
+sns.barplot(x=x, y=y1, palette="rocket", ax=ax20)
+ax20.axhline(0, color="k", clip_on=False)
+ax20.set_ylabel("Sequential")
 
 # Center the data to make it diverging
 y2 = y1 - 5.5
-sns.barplot(x=x, y=y2, palette="vlag", ax=ax2)
-ax2.axhline(0, color="k", clip_on=False)
-ax2.set_ylabel("Diverging")
+sns.barplot(x=x, y=y2, palette="vlag", ax=ax21)
+ax21.axhline(0, color="k", clip_on=False)
+ax21.set_ylabel("Diverging")
 
 # Randomly reorder the data to make it qualitative
 y3 = rs.choice(y1, len(y1), replace=False)
-sns.barplot(x=x, y=y3, palette="deep", ax=ax3)
-ax3.axhline(0, color="k", clip_on=False)
-ax3.set_ylabel("Qualitative")
+sns.barplot(x=x, y=y3, palette="deep", ax=ax22)
+ax22.axhline(0, color="k", clip_on=False)
+ax22.set_ylabel("Qualitative")
 
 # Finalize the plot
 sns.despine(bottom=True)
 plt.setp(f.axes, yticks=[])
 plt.tight_layout(h_pad=2)
-import plotly.graph_objects as go
+
 plt.show()
 
+import pandas as pd
+import csv
+import matplotlib as mpl
+import matplotlib.pyplot as plt
+from matplotlib import gridspec
+import numpy as np
+import seaborn as sns
+
+plt.style.use("seaborn-pastel")  
+
+#Pie chart Countries of origin.
+#1. Countries and artists.
+#1.1 creating countries and artists new dictionaries.
+
+labels = df['place_of_origin'].value_counts().keys()
+values = df['place_of_origin'].value_counts()
+values_perc = (values / values.sum()) * 100
+
+dic = dict(zip(labels, values_perc))
+
+import itertools
+
+newdic={}
+for key, group in itertools.groupby(dic, lambda k: 'All the rest' if (dic[k] < 2) else k):
+    newdic[key] = sum([dic[k] for k in list(group)])
+
+
+labels1= df['artist_title'].value_counts().keys()
+values1 = df['artist_title'].value_counts()
+values_perc1 = (values1 / values1.sum()) * 100
+
+dic1 = dict(zip(labels1, values_perc1))
+
+
+newdic1={}
+for key, group in itertools.groupby(dic1, lambda k: 'All the rest' if (dic1[k] < 4) else k):
+    newdic1[key] = sum([dic1[k] for k in list(group)])
+
+#setting up the plot with Gridspec:
+
+fig1= plt.figure(1,figsize=(16,9))
+gs1 = gridspec.GridSpec(1, 2)
+ax1 = fig1.add_subplot(gs1[0])
+ax2 = fig1.add_subplot(gs1[1])
+
+#piechart for countries:
+labels = newdic.keys()
+sizes = newdic.values()
+explodec = (0.05, 0, 0, 0, 0)
+
+ax1.pie(sizes, explode=explodec, labels=labels,rotatelabels= True, autopct='%1.1f%%', startangle=0, shadow=True)
+ax1.axis('equal')
+ax1.legend(loc='upper left')
