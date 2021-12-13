@@ -1,1 +1,11 @@
+#1. installimng packages required
+install.packages (tidyverse)
+packages = c("tidyverse", "magrittr", 'lubridate')
 
+installed_packages = packages %in% rownames(installed.packages())
+if (any(installed_packages == FALSE)) {
+  install.packages(packages[!installed_packages])
+}
+
+#2. import dataset:
+df <- read.csv('DF_1999movies.csv')
