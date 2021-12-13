@@ -203,3 +203,78 @@ Country10 %>%
   labs(x='',y= 'Relative frequencies',subtitle= 'Relative frequencies of the top 10 countries', title='Top 10 countries')+
   theme_gray()
   
+#Top 20 Genre:
+
+df$Genre <- na_if(df$Genre, 'NaN')
+
+Genre20 <- df %>%
+  mutate(Genre = fct_lump(Genre, n = 18)) %>%
+  count(Genre, sort = TRUE) 
+
+
+Genre20 %>%
+  mutate(n= n/sum(n)) %>%
+  ggplot(aes(x=reorder(Genre, -n), y= n, fill=Genre)) +
+  geom_col() +
+  labs(x='',y= 'Relative frequencies',title= 'Relative frequencies of the top 20 frequent genres')
+
+#although they represent different genres, one might consider to group the levels for a better visualization
+
+Genre20 %>%
+  mutate(Genre = fct_collapse(Genre,
+                              other = ('Other'),
+                              Action = c('Action','Action, Crime, Drama', 'Action, Drama', 'Action, Thriller'),
+                              Animation = ('Animation'),
+                              Comedy = c('Comedy', 'Comedy, Drama', 'Comedy, Drama, Romance', 'Comedy, Romance'),
+                              Crime = c("Crime", "Crime, Drama, Thriller", 'Crime, Drama'),
+                              Documentary = c('Documentary','Documentary, Music'),
+                              Drama= c('Drama', 'Drama, Romance', 'Drama, Thriller'),
+                              Horror = ('Horror'),
+                              Romance= ('Romance'),
+                              Thriller = ('Thriller'))) %>%
+  ggplot(aes(x=reorder(Genre, -n), y= n, fill=Genre)) +
+  geom_col() +
+  labs(x='',y= 'Relative frequencies',title= 'Relative frequencies of the top 20 frequent genres')
+
+
+df %>%
+  mutate(Genre = fct_lump(Genre, n = 18)) %>%
+  mutate(Genre = fct_collapse(Genre,
+                              other = ('Other'),
+                              Action = c('Action','Action, Crime, Drama', 'Action, Drama', 'Action, Thriller'),
+                              Animation = ('Animation'),
+                              Comedy = c('Comedy', 'Comedy, Drama', 'Comedy, Drama, Romance', 'Comedy, Romance'),
+                              Crime = c("Crime, Drama, Thriller", 'Crime, Drama'),
+                              Documentary = c('Documentary','Documentary, Music'),
+                              Drama= c('Drama', 'Drama, Romance', 'Drama, Thriller'),
+                              Horror = ('Horror'),
+                              Romance= ('Romance'),
+                              Thriller = ('Thriller'))) %>%
+  ggplot(aes(Runtime, color=Genre))+
+  geom_freqpoly()+
+  theme_gray()+
+  labs(x='Runtime in minutes',y= '',title= 'Distribution of runtime in minutes of the movies according to the genre')
+
+install.packages('ggridges')
+library(ggridges)
+theme_set(theme_ridges())
+
+df %>%
+  mutate(Genre = fct_lump(Genre, n = 18)) %>%
+  mutate(Genre = fct_collapse(Genre,
+                              other = ('Other'),
+                              Action = c('Action','Action, Crime, Drama', 'Action, Drama', 'Action, Thriller'),
+                              Animation = ('Animation'),
+                              Comedy = c('Comedy', 'Comedy, Drama', 'Comedy, Drama, Romance', 'Comedy, Romance'),
+                              Crime = c("Crime, Drama, Thriller", 'Crime, Drama'),
+                              Documentary = c('Documentary','Documentary, Music'),
+                              Drama= c('Drama', 'Drama, Romance', 'Drama, Thriller'),
+                              Horror = ('Horror'),
+                              Romance= ('Romance'),
+                              Thriller = ('Thriller'))) %>%
+  ggplot(aes(y=Genre, x=Runtime, color=Genre))+
+  geom_density_ridges(aes(fill=Genre))+
+  theme_gray()+
+  labs(x='Runtime in minutes',y= '',title= 'Distribution of runtime in minutes of the movies according to the genre')
+
+
