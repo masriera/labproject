@@ -24,3 +24,16 @@ df <- df %>%
 
 df <- df %>%
   distinct()
+
+######## checking for missing cells##########
+
+# calculating the product of dimensions of dataframe
+totalcells = prod(dim(df))
+
+# calculating the number of cells with na
+missingcells = sum(is.na(df))
+
+# calculating percentage of missing values
+percentage = (missingcells * 100 )/(totalcells)
+print("Percentage of missing values' cells")
+print (percentage)
