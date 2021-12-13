@@ -126,7 +126,7 @@ import itertools
 
 newdic={}
 for key, group in itertools.groupby(dic, lambda k: 'All the rest' if (dic[k] < 2) else k):
-newdic[key] = sum([dic[k] for k in list(group)])
+ newdic[key] = sum([dic[k] for k in list(group)])
 
 
 labels1= df['artist_title'].value_counts().keys()
@@ -138,7 +138,7 @@ dic1 = dict(zip(labels1, values_perc1))
 
 newdic1={}
 for key, group in itertools.groupby(dic1, lambda k: 'All the rest' if (dic1[k] < 3) else k):
-newdic1[key] = sum([dic1[k] for k in list(group)])
+ newdic1[key] = sum([dic1[k] for k in list(group)])
 
 #setting up the plot with Gridspec:
 
@@ -197,7 +197,7 @@ dicsty = dict(zip(labelstyle, valuestyle_perc))
 import itertools
 
 newdicstyle={}
-for key, group in itertools.groupby(dicsty, lambda k: 'All the rest' if (dicsty[k] < 1) else k):
+ for key, group in itertools.groupby(dicsty, lambda k: 'All the rest' if (dicsty[k] < 1) else k):
      newdicstyle[key] = sum([dicsty[k] for k in list(group)])   
 
 
@@ -211,7 +211,7 @@ dicmat = dict(zip(labelmat, valuemat_perc))
 
 
 newdicmat={}
-for key, group in itertools.groupby(dicmat, lambda k: 'All the rest' if (dicmat[k] < 3) else k):
+ for key, group in itertools.groupby(dicmat, lambda k: 'All the rest' if (dicmat[k] < 3) else k):
      newdicmat[key] = sum([dicmat[k] for k in list(group)])   
 
 
