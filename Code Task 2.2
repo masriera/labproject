@@ -231,7 +231,7 @@ Genre20 %>%
                               Thriller = ('Thriller'))) %>%
   ggplot(aes(x=reorder(Genre, -n), y= n, fill=Genre)) +
   geom_col() +
-  labs(x='',y= 'Relative frequencies',title= 'Relative frequencies of the top 20 frequent genres')
+  labs(x='',y= '',title= 'Most frequent genres')
 
 
 df %>%
